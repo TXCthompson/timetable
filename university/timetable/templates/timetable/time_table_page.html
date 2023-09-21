@@ -1,0 +1,44 @@
+{% extends "timetable/layout.html" %}
+
+{% block title %}<title>Розклад {{ group_name }}</title>{% endblock %}
+{% block header %}
+<header>
+    <a id="label" href="{% url 'index' %}"><h2>Розклад.ua</h2></a>
+    <form id="search" method="get">
+        {% csrf_token %}
+        <select name="group_name">
+            {% for group_info in groups_list %}
+                <option {% if group_info.group_name == group_name %}selected="selected"{% endif %} value="{{ group_info.group_name }}">{{ group_info.group_name }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Пошук">
+    </form>
+</header>
+{% endblock %}
+{% block body %}
+<div id="mid">
+
+    {% for day in days_of_week %}
+    <div class="day_row" id="{% if forloop.counter0 == current_day %}day_active{% endif %}">
+        <div class="day">{{ day }}</div>
+        {% with day_number=forloop.counter0 %}
+            {% for time in group_time %}
+                {% if time.day_id == day_number %}
+                    <div class="lesson_block">
+                        <div class="header_ls_bk" id="{% if time.type.id == 1 %}lec{% else %}prac{% endif %}">
+                            <div class="time">{{ time.time_s|time:"H:i" }}</div>
+                            <div class="type">{{ time.type.type_l }}</div>
+                        </div>
+                        <div class="info">
+                            <h4>{{ time.subject_name }}</h4><br>
+                            <i class="fa-solid fa-graduation-cap" style="margin-right: 5px;"></i>{{ time.teacher }}<br>
+                            <i class="fa-solid fa-location-dot" style="margin-right: 5px;"></i>ауд: {{ time.cabinet }}
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endwith %}
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

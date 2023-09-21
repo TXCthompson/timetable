@@ -1,0 +1,18 @@
+{% extends "timetable/layout.html" %}
+
+{% block title %}<title>Розклад.ua</title>{% endblock %}
+{% block body %}
+<div id="main-mid">
+    <p>Вибери свою групу<p>
+
+    <form method="get" id="search_main">
+        {% csrf_token %}
+        <select name="group_name">
+            {% for group_info in groups_list %}
+                <option value="{{ group_info.group_name }}">{{ group_info.group_name }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Пошук">
+    </form>
+</div>
+{% endblock %}

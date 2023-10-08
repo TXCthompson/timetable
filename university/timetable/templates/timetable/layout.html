@@ -1,0 +1,32 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ua" id="light">
+    <head>
+        {% block title %}{% endblock %}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="{% static 'timetable/styles.css' %}" rel="stylesheet">
+        <link href="{% static 'images/icon.png' %}" rel="icon" type="image/x-icon">
+        <script src="https://kit.fontawesome.com/c346a8f922.js" crossorigin="anonymous"></script>
+        <script src="{% static 'js/script.js' %}" defer></script>
+    </head>
+    <body>
+        <div id="main">
+            {% block header %}
+            <div id="header-layout">
+                <div id="label-box">
+                    <a id="label" href="{% url 'index' %}"><b>Розклад.ua</b></a>
+                </div>
+            
+                <div id="switch-box">
+                    <div id="switch" class="switch-btn"></div>
+                </div>
+            </div>
+            {% endblock %}
+            <div id="con">
+                {% block body %}
+                {% endblock %}
+            </div>
+        </div>
+    </body>
+</html>
